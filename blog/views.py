@@ -1,4 +1,6 @@
+from django.http import Http404
 from django.shortcuts import render
+
 
 posts = [
     {
@@ -42,21 +44,27 @@ posts = [
                 укутывал их, чтобы не испортились от дождя.''',
     },
 ]
- 
+
 
 def index(request):
-    return render(request, 'blog/index.html', {'posts': reversed(posts)})
+    """Главная страница / Лента записей."""
+    context = {'posts': posts}
+    return render(request, 'blog/index.html', context)
+
 
 def post_detail(request, id):
-    return render(request, 'blog/detail.html', {'post': posts[id]})
+    """Отображение полного описания выбранной записи."""
+    post = [post for post in posts if post['id'] == id]
+    if not post:
+        raise Http404('Вы указали неверный id')
+    context = {'post': post[0]}
+    return render(request, 'blog/detail.html', context)
+
 
 def category_posts(request, category_slug):
-    category_posts = [post for post in posts if post['category'] == category_slug]
-    category = {
-        'slug': category_slug,
-        'title': f'Категория {category_slug}'
-    }
-    return render(request, 'blog/category.html', {
-        'category': category,
-        'posts': category_posts,
-    })
+    """Отображение публикаций категории."""
+    sorted_posts = [post for post in posts if post['category']
+                    == category_slug]
+    context = {'category': category_slug,
+               'posts': sorted_posts}
+    return render(request, 'blog/category.html', context)
