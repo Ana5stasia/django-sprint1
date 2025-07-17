@@ -42,16 +42,20 @@ posts = [
                 укутывал их, чтобы не испортились от дождя.''',
     },
 ]
- 
+
+
 def index(request):
     reversed_posts = posts[::-1]  # самый простой способ инвертировать список
     return render(request, 'blog/index.html', {'posts': reversed_posts})
 
+
 def post_detail(request, id):
     return render(request, 'blog/detail.html', {'post': posts[id]})
 
+
 def category_posts(request, category_slug):
-    filtered_posts = [post for post in posts if post['category'] == category_slug]
+    filtered_posts = [post for post in posts 
+                      if post['category'] == category_slug]
     reversed_filtered = filtered_posts[::-1]
     return render(request, 'blog/category.html', {
         'category_slug': category_slug,
