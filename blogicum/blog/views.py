@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.http import Http404
 
 posts = [
     {
@@ -44,20 +45,23 @@ posts = [
 ]
 
 
+posts_by_id = {post['id']: post for post in posts}
+
+
 def index(request):
-    reversed_posts = posts[::-1]  # самый простой способ инвертировать список
+    reversed_posts = posts[::-1]
     return render(request, 'blog/index.html', {'posts': reversed_posts})
 
 
 def post_detail(request, id):
-    return render(request, 'blog/detail.html', {'post': posts[id]})
+    try:
+        post = posts_by_id[id]
+    except KeyError as exc:
+        raise Http404("Пост с таким ID не найден.") from exc
+    return render(request, 'blog/detail.html', {'post': post})
 
 
 def category_posts(request, category_slug):
-    filtered_posts = [post for post in posts
-                      if post['category'] == category_slug]
-    reversed_filtered = filtered_posts[::-1]
     return render(request, 'blog/category.html', {
         'category_slug': category_slug,
-        'posts': reversed_filtered,
     })

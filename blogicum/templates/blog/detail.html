@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Запись. {{ post.date }}{% endblock %}
+
+{% block content %}
+<article>
+    <ul>
+        <li><strong>Место:</strong> {{ post.location }}</li>
+        <li><strong>Дата:</strong> {{ post.date }}</li>
+        <li><strong>Категория:</strong> {{ post.category }}</li>
+    </ul>
+    <p>{{ post.text|linebreaks }}</p>
+</article>
+{% endblock %}
