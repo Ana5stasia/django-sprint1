@@ -14,7 +14,6 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -57,15 +56,12 @@ TEMPLATES = [
 WSGI_APPLICATION = 'blogicum.wsgi.application'
 
 
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
-
 
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -84,8 +80,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-
-
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -93,7 +87,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
